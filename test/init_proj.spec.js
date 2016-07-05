@@ -33,6 +33,7 @@ describe('Repository: ', function() {
     // 6. create a new commit object with the current commit SHA as the parent and the new tree SHA, getting a commit SHA back
     // 7. update the reference of your branch to point to the new commit SHA
 
+    // Gets the latest commit sha
     github.repos.getShaOfCommitRef({
       user: config.owner,
       repo: config.repo,
@@ -44,11 +45,12 @@ describe('Repository: ', function() {
       return shaOfTree;
     })
     .then(function(shaOfTree) {
+      // Gets the tree of the latest commit
       return github.gitdata.getTree({
         user: config.owner,
         repo: config.repo,
         sha: shaOfTree,
-        shaOfTree: true
+        recursive: true
       });
     })
     .then(function(tree) {
